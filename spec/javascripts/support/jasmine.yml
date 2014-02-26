@@ -1,0 +1,48 @@
+src_files:
+  - 'bower_components/jasmine/core/Spec.js'
+  - 'bower_components/jasmine/core/Env.js'
+  - 'bower_components/jasmine/core/JsApiReporter.js'
+  - 'bower_components/jasmine/core/PrettyPrinter.js'
+  - 'bower_components/jasmine/core/Suite.js'
+  - 'bower_components/jasmine/core/**/*.js'
+  - 'bower_components/jasmine/html/**.js'
+  - 'src/all.js'
+helpers:
+spec_files:
+  - '**/*[sS]pec.js'
+
+# spec_helper
+#
+# Ruby file that Jasmine server will require before starting.
+# Returned relative to your root path
+# Default spec/javascripts/support/jasmine_helper.rb
+#
+# EXAMPLE:
+#
+# spec_helper: spec/javascripts/support/jasmine_helper.rb
+#
+spec_helper: spec/javascripts/support/jasmine_helper.rb
+
+# boot_dir
+#
+# Boot directory path. Your boot_files must be returned relative to this path.
+# Default: Built in boot file
+#
+# EXAMPLE:
+#
+# boot_dir: spec/javascripts/support/boot
+#
+boot_dir:
+
+# boot_files
+#
+# Return an array of filepaths relative to boot_dir to include in order to boot Jasmine
+# Default: Built in boot file
+#
+# EXAMPLE
+#
+# boot_files:
+#   - '**/*.js'
+#
+boot_files:
+
