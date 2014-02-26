@@ -40,7 +40,7 @@ Then a quick `bower install` is all you need.
 
 Just download the latest or clone this repository:
 
-- Download: https://github.com/gburghardt/jasmine-data_driven_tests/downloads/master.zip
+- Download: https://github.com/gburghardt/jasmine-data_driven_tests/archive/master.zip
 - Clone: `git clone https://github.com/gburghardt/jasmine-data_driven_tests.git`
 
 ## Getting Started
