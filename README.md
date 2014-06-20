@@ -27,12 +27,14 @@ There are two ways to get Jasmine Data Driven Tests:
 If you are using Bower to manage your JavaScript dependencies, just add this
 repository to your `bower.json` file:
 
-    {
-        "devDependencies": {
-            "jasmine": "~2.0",
-            "jasmine-data_driven_tests": "~1.0"
-        }
+```javascript
+{
+    "devDependencies": {
+        "jasmine": "~2.0",
+        "jasmine-data_driven_tests": "~1.0"
     }
+}
+```
 
 Then a quick `bower install` is all you need.
 
@@ -50,11 +52,15 @@ two global functions available to you:
 
 Data Driven Tests:
 
-    all(description, dataset, callback);
+```javascript
+all(description, dataset, callback);
+```
 
 Data Driven Tests, marked as pending:
 
-    xall(description, dataset, callback);
+```javascript
+xall(description, dataset, callback);
+```
 
 ### Data Driven Test Basics
 
@@ -66,34 +72,38 @@ Data Driven Tests have three basic components:
 
 A quick example:
 
-    all("blank values are invalid",
-        [
-            "",
-            null,
-            undefined
-        ],
-        function(value) {
-            expect(isEmpty(value)).toBe(true);
-        }
-    );
+```javascript
+all("blank values are invalid",
+    [
+        "",
+        null,
+        undefined
+    ],
+    function(value) {
+        expect(isEmpty(value)).toBe(true);
+    }
+);
+```
 
 The call to `all` above is equivalent to these native Jasmine method calls:
 
-    describe("blank values are invalid", function() {
+```javascript
+describe("blank values are invalid", function() {
 
-        it('blank values are invalid (Variant #0 <"">)', function() {
-            expect(isEmpty("")).toBe(true);
-        });
-
-        it('blank values are invalid (Variant #1 <null>)', function() {
-            expect(isEmpty(null)).toBe(true);
-        });
-
-        it('blank values are invalid (Variant #2 <undefined>)', function() {
-            expect(isEmpty(undefined)).toBe(true);
-        });
-
+    it('blank values are invalid (Variant #0 <"">)', function() {
+        expect(isEmpty("")).toBe(true);
     });
+
+    it('blank values are invalid (Variant #1 <null>)', function() {
+        expect(isEmpty(null)).toBe(true);
+    });
+
+    it('blank values are invalid (Variant #2 <undefined>)', function() {
+        expect(isEmpty(undefined)).toBe(true);
+    });
+
+});
+```
 
 In the Jasmine test runner, you'll see the following output:
 
@@ -111,15 +121,17 @@ variant to just run that one case.
 
 You can pass as many arguments to your spec function as you want:
 
-    all("values are greater than 0",
-        [
-            [ 3, 1 ],
-            [ 5, 2 ]
-        ],
-        function(a, b) {
-            expect(a - b > 0).toBe(true);
-        }
-    );
+```javascript
+all("values are greater than 0",
+    [
+        [ 3, 1 ],
+        [ 5, 2 ]
+    ],
+    function(a, b) {
+        expect(a - b > 0).toBe(true);
+    }
+);
+```
 
 You'll see this in the test runner:
 
@@ -138,18 +150,20 @@ function accepts three. The third argument is the `done` callback in Jasmine,
 which when called will complete the current spec and advance the test runner to
 the next one.
 
-    all("values are greater than 5",
-        [
-            [ 3, 1 ],
-            [ 5, 2 ]
-        ],
-        function(a, b, done) {
-            setTimeout(function() {
-                expect(a - b > 0).toBe(true);
-                done();
-            }, 50);
-        }
-    );
+```javascript
+all("values are greater than 5",
+    [
+        [ 3, 1 ],
+        [ 5, 2 ]
+    ],
+    function(a, b, done) {
+        setTimeout(function() {
+            expect(a - b > 0).toBe(true);
+            done();
+        }, 50);
+    }
+);
+```
 
 The `all` and `xall` functions are really just wrappers for `describe`, `it`,
 and `xit`. Data Driven Specs are supported anywhere Jasmine is supported.
@@ -159,16 +173,18 @@ and `xit`. Data Driven Specs are supported anywhere Jasmine is supported.
 You can use the `this` keyword in your data driven tests just like you can with
 regular `it` specs:
 
-    beforeEach(function() {
-        this.a = 5;
-    });
+```javascript
+beforeEach(function() {
+    this.a = 5;
+});
 
-    all("references to 'this' work",
-        [ 1, 2, 3 ],
-        function(b) {
-            expect(this.a - b > 0).toBe(true);
-        }
-    );
+all("references to 'this' work",
+    [ 1, 2, 3 ],
+    function(b) {
+        expect(this.a - b > 0).toBe(true);
+    }
+);
+```
 
 ## When To Use Data Driven Tests
 
