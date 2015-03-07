@@ -54,12 +54,14 @@ Data Driven Tests:
 
 ```javascript
 all(description, dataset, callback);
+using(description, dataset, callback);
 ```
 
 Data Driven Tests, marked as pending:
 
 ```javascript
 xall(description, dataset, callback);
+xusing(description, dataset, callback);
 ```
 
 ### Data Driven Test Basics
@@ -116,6 +118,66 @@ In the Jasmine test runner, you'll see the following output:
 Since they are just regular `describe`'s and `it`'s, you can click on
 __blank values are invalid__ to run every test case, or click on an individual
 variant to just run that one case.
+
+While the `all` method expands to the jasmine `it` method, the `using` method expands to the `describe` method.
+The `using` method is used to create more complex data driven tests.
+
+```javascript
+using("customer object initialization",
+    [
+        "fred",
+        "barney"
+    ],
+    function(value) {
+        var customer;
+
+        beforeEach(function()) {
+            customer = new Customer(name);
+        }
+        it('should have active status', function () {
+            expect(customer.isActive).toBe(true);
+        });
+        it('should have upper case name', function () {
+            expect(isUpperCase(customer.name)).toBe(true);
+        });
+    }
+);
+```
+
+The call to `using` above is equivalent to these native Jasmine method calls:
+
+```javascript
+describe("customer object initialization", function() {
+
+    describe('customer object initiation (Variant #0, <"fred">)', function(value) {
+        var customer;
+
+        beforeEach(function()) {
+            customer = new Customer("fred");
+        }
+        it('should have active status', function () {
+            expect(customer.isActive).toBe(true);
+        });
+        it('should have upper case name', function () {
+            expect(isUpperCase(customer.name)).toBe(true);
+        });
+    }
+
+    describe('customer object initiation (Variant #1, <"barney">)', function(value) {
+        var customer;
+
+        beforeEach(function()) {
+            customer = new Customer("barney");
+        }
+        it('should have active status', function () {
+            expect(customer.isActive).toBe(true);
+        });
+        it('should have upper case name', function () {
+            expect(isUpperCase(customer.name)).toBe(true);
+        });
+    }
+});
+```
 
 ### Unlimited Numbers of Arguments
 

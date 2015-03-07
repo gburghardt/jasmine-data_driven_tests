@@ -1,13 +1,22 @@
 (function(global) {
 
 var toString = Object.prototype.toString;
+var ALLOW_ASYNC = true;
 
 function all(description, dataset, fn) {
-	return createDataDrivenSpecs(global.it, description, dataset, fn);
+	return createDataDrivenSpecs(global.it, description, dataset, fn, ALLOW_ASYNC);
 }
 
 function xall(description, dataset, fn) {
-	return createDataDrivenSpecs(global.xit, description, dataset, fn);
+	return createDataDrivenSpecs(global.xit, description, dataset, fn, ALLOW_ASYNC);
+}
+
+function using(description, dataset, fn) {
+	return createDataDrivenSpecs(global.describe, description, dataset, fn, !ALLOW_ASYNC);
+}
+
+function xusing(description, dataset, fn) {
+	return createDataDrivenSpecs(global.xdescribe, description, dataset, fn, !ALLOW_ASYNC);
 }
 
 function createSyncDataDrivenFn(args, fn) {
@@ -49,7 +58,7 @@ function createVariantDescription(description, args, index) {
 	return variantDesc;
 }
 
-function createDataDrivenSpecs(specProvider, description, dataset, fn) {
+function createDataDrivenSpecs(specProvider, description, dataset, fn, isAsyncAllowed) {
 	var i = 0,
 	    length = 0,
 	    specs = [],
@@ -79,7 +88,7 @@ function createDataDrivenSpecs(specProvider, description, dataset, fn) {
 				fn: createSyncDataDrivenFn(args, fn)
 			});
 		}
-		else if (args.length + 1 === fn.length) {
+		else if (isAsyncAllowed && args.length + 1 === fn.length) {
 			specs.push({
 				description: variantDesc,
 				fn: createAsyncDataDrivenFn(args, fn)
@@ -128,5 +137,7 @@ function error(name, message) {
 
 global.all = all;
 global.xall = xall;
+global.using = using;
+global.xusing = xusing;
 
 })(this);
