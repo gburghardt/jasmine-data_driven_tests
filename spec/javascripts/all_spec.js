@@ -1,113 +1,112 @@
 describe("all", function() {
 
-  it("returns a suite", function () {
-    var suite = all("just testing", [1, 2], function (x) {
-    });
+	it("returns a suite", function() {
+		var suite = all("just testing", [1,2], function(x) {});
 
-    expect(suite instanceof jasmine.Suite).toBe(true);
-    expect(suite.description).toBe("just testing");
-    expect(suite.children.length).toBe(2);
-  });
+		expect(suite instanceof jasmine.Suite).toBe(true);
+		expect(suite.description).toBe("just testing");
+		expect(suite.children.length).toBe(2);
+	});
 
-  function isEmpty(x) {
-    if (x === null || x === undefined || x === "" || x === NaN || x === false)
-      return true;
+	function isEmpty(x) {
+		if (x === null || x === undefined || x === "" || x === NaN || x === false)
+			return true;
 
-    var type = typeof(x);
+		var type = typeof(x);
 
-    if (type === "number" && (isNaN(x) || x <= 0))
-      return true;
-    else if (type === "object")
-      if (Object.prototype.toString.call(x) === "[object Array]")
-        return x.length === 0;
-      else {
-        for (var key in x)
-          if (x.hasOwnProperty(key))
-            return false;
+		if (type === "number" && (isNaN(x) || x <= 0))
+			return true;
+		else if (type === "object")
+			if (Object.prototype.toString.call(x) === "[object Array]")
+				return x.length === 0;
+			else {
+				for (var key in x)
+					if (x.hasOwnProperty(key))
+						return false;
 
-        return true;
-      }
+				return true;
+			}
 
-    return false;
-  }
+		return false;
+	}
 
-  all("Blank values are empty, for example",
-    ["", null, undefined, 0, -1, [[]], NaN, {}],
-    function (x) {
-      expect(isEmpty(x)).toBe(true);
-    });
+	all("Blank values are empty, for example",
+		[ "", null, undefined, 0, -1, [[]], NaN, {} ],
+		function(x) {
+			expect(isEmpty(x)).toBe(true);
+		});
 
-  all("Complex arguments are supported",
-    [
-      {name: "Aaa"},
-      {name: "Zab"},
-      {name: "Koala"}
-    ],
-    function (a) {
-      expect(a.name.length > 10).toBe(false);
-    });
+	all("Complex arguments are supported",
+		[
+			{ name: "Aaa" },
+			{ name: "Zab"},
+			{ name: "Koala" }
+		],
+		function(a) {
+			expect(a.name.length > 10).toBe(false);
+		});
 
-  all("Asynchronous specs are supported",
-    [1, 2, 3, 4, 5, 6, 7],
-    function (x, done) {
-      setTimeout(function () {
-        expect(x > 10).toBe(false);
-        done();
-      }, 50);
-    });
+	all("Asynchronous specs are supported",
+		[1,2,3,4,5,6,7],
+		function(x, done) {
+			setTimeout(function() {
+				expect(x > 10).toBe(false);
+				done();
+			}, 50);
+		});
 
-  all("Multiple arguments are supported",
-    [
-      [2, 4],
-      [1, 8],
-      [4, 4]
-    ],
-    function (x, y) {
-      expect(x + y > 10).toBe(false);
-    });
+	all("Multiple arguments are supported",
+		[
+			[ 2, 4 ],
+			[ 1, 8 ],
+			[ 4, 4 ]
+		],
+		function(x, y) {
+			expect(x + y > 10).toBe(false);
+		});
 
-  all("Asynchronous, multiple arguments are supported",
-    [
-      [2, 4],
-      [1, 8],
-      [4, 4]
-    ],
-    function (x, y, done) {
-      setTimeout(function () {
-        expect(x + y > 10).toBe(false);
-        done();
-      }, 50);
-    });
+	all("Asynchronous, multiple arguments are supported",
+		[
+			[ 2, 4 ],
+			[ 1, 8 ],
+			[ 4, 4 ]
+		],
+		function(x, y, done) {
+			setTimeout(function() {
+				expect(x + y > 10).toBe(false);
+				done();
+			}, 50);
+		});
 
-  xall("These are pending",
-    [1, 2, 3, 4],
-    function (x) {
-      expect(x > 10).toBe(true);
-    });
+	xall("These are pending",
+		[ 1, 2, 3, 4 ],
+		function(x) {
+			expect(x > 10).toBe(true);
+		});
 
-  using("using supported",
-    [1, 2, 3, 4],
-    function (value) {
-      var x;
-      beforeEach(function () {
-        x = value;
-      });
-      it("Should be true", function () {
-        expect(x < 10).toBe(true);
-      });
-    });
+	using("using supported",
+		[1, 2, 3, 4],
+		function (value) {
+			var x;
+			beforeEach(function () {
+				x = value;
+			});
+			it("Should be true", function () {
+				expect(x < 10).toBe(true);
+			});
+		});
 
-  xusing("xusing supported",
-    [1, 2, 3, 4],
-    function (value) {
-      var x;
-      beforeEach(function () {
-        x = value;
-      });
-      it("Should not be called", function () {
-        expect(x < 10).toBe(false);
-      });
-    });
+	xusing("xusing supported",
+		[1, 2, 3, 4],
+		function (value) {
+			var x;
+			beforeEach(function () {
+				x = value;
+			});
+			it("Should not be called", function () {
+				expect(x < 10).toBe(false);
+			});
+		});
 });
 
 describe("error handling", function() {
@@ -154,16 +153,16 @@ describe("error handling", function() {
 
 	});
 
-  describe("using doesn't allow callback functions", function() {
+	describe("using doesn't allow callback functions", function() {
 
-    it("must not contain more than n arguments", function() {
-      var error = new Error("Expecting data driven spec to accept 2 arguments, but 3 arguments are specified in the callback function (bad dataset)");
-      error.name = "Jasmine.ArgumentCountMismatchError";
+		it("must not contain more than n arguments", function() {
+			var error = new Error("Expecting data driven spec to accept 2 arguments, but 3 arguments are specified in the callback function (bad dataset)");
+			error.name = "Jasmine.ArgumentCountMismatchError";
 
-      expect(function() {
-        using("bad dataset", [ [1,2], [3,6] ], 	function(a, b, c) {});
-      }).toThrow(error);
-    });
+			expect(function() {
+				using("bad dataset", [ [1,2], [3,6] ], 	function(a, b, c) {});
+			}).toThrow(error);
+		});
 
-  });
+	});
 });
