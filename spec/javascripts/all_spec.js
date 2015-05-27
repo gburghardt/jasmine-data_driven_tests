@@ -31,10 +31,20 @@ describe("all", function() {
 	}
 
 	all("Blank values are empty, for example",
-		[ "", null, undefined, 0, -1, [[]], NaN, {} ],
+		[
+			"",
+			null,
+			undefined,
+			0,
+			-1,
+			[[]],
+			NaN,
+			{}
+		],
 		function(x) {
 			expect(isEmpty(x)).toBe(true);
-		});
+		}
+	);
 
 	all("Complex arguments are supported",
 		[
@@ -44,16 +54,26 @@ describe("all", function() {
 		],
 		function(a) {
 			expect(a.name.length > 10).toBe(false);
-		});
+		}
+	);
 
 	all("Asynchronous specs are supported",
-		[1,2,3,4,5,6,7],
+		[
+			1,
+			2,
+			3,
+			4,
+			5,
+			6,
+			7
+		],
 		function(x, done) {
 			setTimeout(function() {
 				expect(x > 10).toBe(false);
 				done();
 			}, 50);
-		});
+		}
+	);
 
 	all("Multiple arguments are supported",
 		[
@@ -63,7 +83,8 @@ describe("all", function() {
 		],
 		function(x, y) {
 			expect(x + y > 10).toBe(false);
-		});
+		}
+	);
 
 	all("Asynchronous, multiple arguments are supported",
 		[
@@ -76,37 +97,20 @@ describe("all", function() {
 				expect(x + y > 10).toBe(false);
 				done();
 			}, 50);
-		});
+		}
+	);
 
 	xall("These are pending",
-		[ 1, 2, 3, 4 ],
+		[
+			1,
+			2,
+			3,
+			4
+		],
 		function(x) {
 			expect(x > 10).toBe(true);
-		});
-
-	using("using supported",
-		[1, 2, 3, 4],
-		function (value) {
-			var x;
-			beforeEach(function () {
-				x = value;
-			});
-			it("Should be true", function () {
-				expect(x < 10).toBe(true);
-			});
-		});
-
-	xusing("xusing supported",
-		[1, 2, 3, 4],
-		function (value) {
-			var x;
-			beforeEach(function () {
-				x = value;
-			});
-			it("Should not be called", function () {
-				expect(x < 10).toBe(false);
-			});
-		});
+		}
+	);
 });
 
 describe("error handling", function() {
@@ -153,16 +157,4 @@ describe("error handling", function() {
 
 	});
 
-	describe("using doesn't allow callback functions", function() {
-
-		it("must not contain more than n arguments", function() {
-			var error = new Error("Expecting data driven spec to accept 2 arguments, but 3 arguments are specified in the callback function (bad dataset)");
-			error.name = "Jasmine.ArgumentCountMismatchError";
-
-			expect(function() {
-				using("bad dataset", [ [1,2], [3,6] ], 	function(a, b, c) {});
-			}).toThrow(error);
-		});
-
-	});
 });

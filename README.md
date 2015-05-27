@@ -109,11 +109,13 @@ describe("blank values are invalid", function() {
 
 In the Jasmine test runner, you'll see the following output:
 
-    blank values are invalid
+```
+blank values are invalid
 
-        blank values are invalid (Variant #0 <"">)
-        blank values are invalid (Variant #1 <null>)
-        blank values are invalid (Variant #2 <undefined>)
+    blank values are invalid (Variant #0 <"">)
+    blank values are invalid (Variant #1 <null>)
+    blank values are invalid (Variant #2 <undefined>)
+```
 
 Since they are just regular `describe`'s and `it`'s, you can click on
 __blank values are invalid__ to run every test case, or click on an individual
@@ -128,15 +130,17 @@ using("customer object initialization",
         "fred",
         "barney"
     ],
-    function(value) {
+    function(name) {
         var customer;
 
-        beforeEach(function()) {
+        beforeEach(function() {
             customer = new Customer(name);
-        }
+        });
+
         it('should have active status', function () {
             expect(customer.isActive).toBe(true);
         });
+
         it('should have upper case name', function () {
             expect(isUpperCase(customer.name)).toBe(true);
         });
@@ -149,33 +153,96 @@ The call to `using` above is equivalent to these native Jasmine method calls:
 ```javascript
 describe("customer object initialization", function() {
 
-    describe('customer object initiation (Variant #0, <"fred">)', function(value) {
+    describe('customer object initiation (Variant #0, <"fred">)', function() {
         var customer;
 
-        beforeEach(function()) {
+        beforeEach(function() {
             customer = new Customer("fred");
-        }
+        });
+
         it('should have active status', function () {
             expect(customer.isActive).toBe(true);
         });
+
         it('should have upper case name', function () {
             expect(isUpperCase(customer.name)).toBe(true);
         });
-    }
+    });
 
-    describe('customer object initiation (Variant #1, <"barney">)', function(value) {
+    describe('customer object initiation (Variant #1, <"barney">)', function() {
         var customer;
 
-        beforeEach(function()) {
+        beforeEach(function() {
             customer = new Customer("barney");
-        }
+        });
+
         it('should have active status', function () {
             expect(customer.isActive).toBe(true);
         });
+
         it('should have upper case name', function () {
             expect(isUpperCase(customer.name)).toBe(true);
         });
+    });
+
+});
+```
+
+And for the icing on the cake? A `using` block can contain one or more `all`'s:
+
+```javascript
+using("numbers greater than zero",
+    [
+        1,
+        2
+    ],
+    function(n`) {
+        all("negative numbers are less",
+            [
+                -1,
+                -2
+            ],
+            function(n2) {
+                expect(n2 < n1).toBe(true);
+            }
+        );
     }
+);
+```
+
+Intermingling `using` with `all` produces these native Jasmine calls:
+
+```javascript
+describe("numbers greater than zero", function() {
+
+    describe("numbers greater than zero (Variant #0 <1>)", function() {
+
+        describe("negative numbers are less", function() {
+            it("negative numbers are less (Variant #0 <-1>)", function() {
+                expect(-1 < 1).toBe(true);
+            });
+
+            it("negative numbers are less (Variant #1 <-2>)", function() {
+                expect(-2 < 1).toBe(true);
+            });
+        });
+
+    });
+
+    describe("numbers greater than zero (Variant #1 <2>)", function() {
+
+        describe("negative numbers are less", function() {
+            it("negative numbers are less (Variant #0 <-1>)", function() {
+                expect(-1 < 2).toBe(true);
+            });
+
+            it("negative numbers are less (Variant #1 <-2>)", function() {
+                expect(-2 < 2).toBe(true);
+            });
+        });
+
+    });
+
 });
 ```
 
@@ -197,10 +264,14 @@ all("values are greater than 0",
 
 You'll see this in the test runner:
 
-    values are greater than 0
+```
+values are greater than 0
 
-        values are greater than 0 (Variant #0 <3, 1>)
-        values are greater than 0 (Variant #1 <5, 2>)
+    values are greater than 0 (Variant #0 <3, 1>)
+    values are greater than 0 (Variant #1 <5, 2>)
+```
+
+The same holds true for the `using` function as well.
 
 ### Support for Asynchronous Specs
 

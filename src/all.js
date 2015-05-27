@@ -1,22 +1,24 @@
-(function(global) {
+"use strict";
 
-var toString = Object.prototype.toString;
-var ALLOW_ASYNC = true;
+(function() {
+
+var root = this,
+    toString = Object.prototype.toString;
 
 function all(description, dataset, fn) {
-	return createDataDrivenSpecs(global.it, description, dataset, fn, ALLOW_ASYNC);
+	return createDataDrivenSpecs(root.it, description, dataset, fn, true);
 }
 
 function xall(description, dataset, fn) {
-	return createDataDrivenSpecs(global.xit, description, dataset, fn, ALLOW_ASYNC);
+	return createDataDrivenSpecs(root.xit, description, dataset, fn, true);
 }
 
 function using(description, dataset, fn) {
-	return createDataDrivenSpecs(global.describe, description, dataset, fn, !ALLOW_ASYNC);
+	return createDataDrivenSpecs(root.describe, description, dataset, fn, false);
 }
 
 function xusing(description, dataset, fn) {
-	return createDataDrivenSpecs(global.xdescribe, description, dataset, fn, !ALLOW_ASYNC);
+	return createDataDrivenSpecs(root.xdescribe, description, dataset, fn, false);
 }
 
 function createSyncDataDrivenFn(args, fn) {
@@ -43,7 +45,7 @@ function createVariantDescription(description, args, index) {
 		}
 
 		if (args[i] === "") {
-			variantDesc += '""'
+			variantDesc += '""';
 		}
 		else if (isArray(args[i])) {
 			variantDesc += toString.call(args[i]);
@@ -106,7 +108,7 @@ function createDataDrivenSpecs(specProvider, description, dataset, fn, isAsyncAl
 	}
 
 	// Create the suite and specs
-	suite = global.describe(description, function() {
+	suite = root.describe(description, function() {
 		for (i = 0, length = specs.length; i < length; i++) {
 			specProvider(specs[i].description, specs[i].fn);
 		}
@@ -135,9 +137,9 @@ function error(name, message) {
 	return error;
 }
 
-global.all = all;
-global.xall = xall;
-global.using = using;
-global.xusing = xusing;
+root.all = all;
+root.xall = xall;
+root.using = using;
+root.xusing = xusing;
 
-})(this);
+}).call(this);
