@@ -44,8 +44,8 @@ function createVariantDescription(description, args, index) {
 			variantDesc += ", ";
 		}
 
-		if (args[i] === "") {
-			variantDesc += '""';
+		if (typeof args[i] === "string") {
+			variantDesc += '"' + args[i] + '"';
 		}
 		else if (isArray(args[i])) {
 			variantDesc += toString.call(args[i]);
