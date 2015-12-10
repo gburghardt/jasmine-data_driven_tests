@@ -196,7 +196,7 @@ using("numbers greater than zero",
         1,
         2
     ],
-    function(n`) {
+    function(n) {
         all("negative numbers are less",
             [
                 -1,
