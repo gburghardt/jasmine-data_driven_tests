@@ -5,6 +5,11 @@
 var root = this,
     toString = Object.prototype.toString;
 
+if (typeof module !== 'undefined' && module.exports && typeof exports !== 'undefined') {
+  if (typeof global !== 'undefined') {
+    root = global;
+  }
+}
 function all(description, dataset, fn) {
 	return createDataDrivenSpecs(root.it, description, dataset, fn, true);
 }
