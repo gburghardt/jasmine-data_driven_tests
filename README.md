@@ -38,6 +38,12 @@ repository to your `bower.json` file:
 
 Then a quick `bower install` is all you need.
 
+### Using NPM
+
+If you are using NPM to manage your Javascript dependecies, just install the artifact with --save-dev flag:
+
+```npm install jasmine-data_driven_tests --save-dev```
+
 ### Manual Installation
 
 Just download the latest or clone this repository:
@@ -47,7 +53,20 @@ Just download the latest or clone this repository:
 
 ## Getting Started
 
-Simply include `src/all.js` after the source files for Jasmine. Now, you have
+In browser environment simply include `src/all.js` after the source files for Jasmine.
+
+In node environment require the module before your suite.
+
+```javascript
+'use strict';
+var service;
+require('jasmine-data_driven_tests');
+service = require('my-shiny-new-service');
+
+describe(description, dataset, callback);
+```
+
+Now, you have
 two global functions available to you:
 
 Data Driven Tests:
