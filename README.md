@@ -83,6 +83,13 @@ xall(description, dataset, callback);
 xusing(description, dataset, callback);
 ```
 
+Data Driven Tests, marked as focused:
+
+```javascript
+fall(description, dataset, callback);
+fusing(description, dataset, callback);
+```
+
 ### Data Driven Test Basics
 
 Data Driven Tests have three basic components:

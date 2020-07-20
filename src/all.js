@@ -18,12 +18,20 @@ function xall(description, dataset, fn) {
 	return createDataDrivenSpecs(root.xit, description, dataset, fn, true);
 }
 
+function fall(description, dataset, fn) {
+	return createDataDrivenSpecs(root.fit, description, dataset, fn, true);
+}
+
 function using(description, dataset, fn) {
 	return createDataDrivenSpecs(root.describe, description, dataset, fn, false);
 }
 
 function xusing(description, dataset, fn) {
 	return createDataDrivenSpecs(root.xdescribe, description, dataset, fn, false);
+}
+
+function fusing(description, dataset, fn) {
+	return createDataDrivenSpecs(root.fdescribe, description, dataset, fn, false);
 }
 
 function createSyncDataDrivenFn(args, fn) {
@@ -144,7 +152,9 @@ function error(name, message) {
 
 root.all = all;
 root.xall = xall;
+root.fall = fall;
 root.using = using;
 root.xusing = xusing;
+root.fusing = fusing;
 
 }).call(this);
